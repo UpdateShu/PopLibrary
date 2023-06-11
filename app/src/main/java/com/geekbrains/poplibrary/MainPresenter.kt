@@ -1,17 +1,20 @@
 package com.geekbrains.poplibrary
 
-class MainPresenter(val view : MainViewImpl, counters: Int ) {
+import moxy.MvpPresenter
 
-    private val model = CountersModel(counters)
+class MainPresenter(val model : CountersModel) : MvpPresenter<MainViewImpl>() {
 
-    init {
-        for (i in 0..counters.dec()) {
-            view.setButtonText(i, model.getCurrent(i).toString())
+    var counters : Int
+        get() = model.counters
+        set(value) {
+            model.counters = value
+            for (i in 0.. value.dec()) {
+                viewState.setButtonText(i, model.getCurrent(i).toString())
+            }
         }
-    }
 
     fun counterViewClick(index: Int) {
         val nextValue = model.next(index)
-        view.setButtonText(index, nextValue.toString())
+        viewState.setButtonText(index, nextValue.toString())
     }
 }
