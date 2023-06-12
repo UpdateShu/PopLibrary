@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary
+package com.geekbrains.poplibrary.mvp.view
 
 import moxy.MvpView
 import moxy.viewstate.strategy.AddToEndStrategy
@@ -6,5 +6,6 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndStrategy::class)
 interface MainViewImpl : MvpView {
-    fun setButtonText(index: Int, text: String)
+    fun init()
+    fun updateList()
 }
