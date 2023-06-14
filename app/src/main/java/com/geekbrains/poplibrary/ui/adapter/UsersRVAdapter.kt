@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.geekbrains.poplibrary.databinding.ItemUserBinding
-import com.geekbrains.poplibrary.ui.list.IUserListPresenter
+import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
 
 const val INVALID_INDEX = -1

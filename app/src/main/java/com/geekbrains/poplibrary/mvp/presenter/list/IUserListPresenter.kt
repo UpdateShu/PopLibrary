@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary.ui.list
+package com.geekbrains.poplibrary.mvp.presenter.list
 
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
 

@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary
+package com.geekbrains.poplibrary.mvp.model
 
 class CountersModel() {
 

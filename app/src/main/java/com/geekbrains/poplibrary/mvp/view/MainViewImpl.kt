@@ -6,6 +6,4 @@ import moxy.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndStrategy::class)
 interface MainViewImpl : MvpView {
-    fun init()
-    fun updateList()
 }
