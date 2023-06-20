@@ -12,6 +12,7 @@ import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
+import com.geekbrains.poplibrary.ui.showSnackBarNoAction
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -50,8 +51,16 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    override fun updateList() {
+    override fun updateUserList() {
         adapter?.notifyDataSetChanged()
+    }
+
+    override fun addUserToList(position: Int) {
+        adapter?.notifyItemInserted(position)
+    }
+
+    override fun showError(message: String) {
+        binding.rUsers.showSnackBarNoAction(message)
     }
 
     override fun backPressed() = presenter.backPressed()
