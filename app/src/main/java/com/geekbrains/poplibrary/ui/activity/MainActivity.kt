@@ -6,7 +6,8 @@ import com.geekbrains.poplibrary.R
 import com.geekbrains.poplibrary.mvp.presenter.MainPresenter
 import com.geekbrains.poplibrary.databinding.ActivityMainBinding
 import com.geekbrains.poplibrary.mvp.view.MainViewImpl
-import com.geekbrains.poplibrary.navigation.AndroidScreens
+import com.geekbrains.poplibrary.mvp.view.rxjavatest.Creation
+import com.geekbrains.poplibrary.mvp.view.rxjavatest.Operators
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -26,6 +27,9 @@ class MainActivity : MvpAppCompatActivity(), MainViewImpl {
 
         vb = ActivityMainBinding.inflate(layoutInflater)
         setContentView(vb?.root)
+
+        Creation().exec()
+        Operators().exec()
     }
 
     override fun onResumeFragments() {
