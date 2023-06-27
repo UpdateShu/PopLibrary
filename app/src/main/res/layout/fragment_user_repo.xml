@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragment.UserRepoFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_repo_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/repo_info_padding"
+            app:helperText="@string/user_repo_description"
+            tools:text="@string/user_repo_description"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_repo_created"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/repo_info_padding"
+            app:helperText="@string/repo_created"
+            tools:text="@string/repo_created"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_forks_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/repo_info_padding"
+            app:helperText="@string/repo_forks_count"
+            tools:text="@string/repo_forks_count"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+</FrameLayout>

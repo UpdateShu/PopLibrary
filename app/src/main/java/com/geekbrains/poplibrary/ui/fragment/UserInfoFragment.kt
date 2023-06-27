@@ -6,12 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUserInfoBinding
-import com.geekbrains.poplibrary.mvp.model.GithubUser
+import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
+import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
+import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsersRepo
 import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
+import com.geekbrains.poplibrary.ui.adapter.UserReposRVAdapter
+import com.geekbrains.poplibrary.ui.image.GlideImageLoader
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -21,8 +29,15 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
     private val binding
         get() = _binding!!
 
+    var adapter: UserReposRVAdapter? = null
+    val imageLoader = GlideImageLoader()
+
     val presenter: UserInfoPresenter by moxyPresenter {
-        UserInfoPresenter(App.instance.router)
+        UserInfoPresenter(
+            AndroidSchedulers.mainThread(),
+            RetrofitGithubUsersRepo(ApiHolder.api),
+            App.instance.router,
+            App.instance.screens)
     }
 
     companion object {
@@ -51,8 +66,22 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
             GithubUser::class.java)
     }
 
+    override fun init() {
+        binding.rRepos.layoutManager = LinearLayoutManager(context)
+        adapter = UserReposRVAdapter(presenter.userReposListPresenter)
+        binding.rRepos.adapter = adapter
+    }
+
     override fun setUserLogin(login: String) {
         binding.userLogin.text = login
+    }
+
+    override fun setUserAvatar(avatarUrl: String) {
+        imageLoader.loadInto(avatarUrl, binding.infoAvatar)
+    }
+
+    override fun updateUserRepoList() {
+        adapter?.notifyDataSetChanged()
     }
 
     override fun onDestroyView() {
