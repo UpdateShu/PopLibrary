@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUsersBinding
 import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
-import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsersRepo
+import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
+import com.geekbrains.poplibrary.mvp.model.entity.room.Database
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
@@ -29,11 +31,15 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     var adapter: UsersRVAdapter? = null
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(
-            AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api),
+        val usersRepo =  RetrofitGithubUsers(
+            ApiHolder.api,
+            App.networkStatus,
+            RoomGithubUsersCache(Database.getInstance()))
+
+        UsersPresenter(usersRepo,
             App.instance.router,
-            App.instance.screens
+            App.instance.screens,
+            AndroidSchedulers.mainThread()
         )
     }
 

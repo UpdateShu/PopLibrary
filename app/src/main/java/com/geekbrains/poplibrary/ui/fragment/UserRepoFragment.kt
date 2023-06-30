@@ -9,7 +9,7 @@ import androidx.annotation.RequiresApi
 
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUserRepoBinding
-import com.geekbrains.poplibrary.mvp.model.entity.GithubUserRepo
+import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
 import com.geekbrains.poplibrary.mvp.presenter.UserRepoPresenter
 import com.geekbrains.poplibrary.mvp.view.UserRepoView
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
@@ -50,7 +50,7 @@ class UserRepoFragment : MvpAppCompatFragment(), UserRepoView, BackButtonListene
         super.onViewCreated(view, savedInstanceState)
 
         presenter.repo = arguments?.getParcelable(GIT_USER_REPO,
-            GithubUserRepo::class.java)
+            GithubRepository::class.java)
     }
 
     override fun setUserRepoName(name: String) {

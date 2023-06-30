@@ -1,6 +1,6 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
-import com.geekbrains.poplibrary.mvp.model.entity.GithubUserRepo
+import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
 import com.geekbrains.poplibrary.mvp.view.UserRepoView
 import com.github.terrakok.cicerone.Router
 
@@ -9,7 +9,7 @@ import moxy.MvpPresenter
 class UserRepoPresenter(val router: Router)
     : MvpPresenter<UserRepoView>() {
 
-    var repo: GithubUserRepo? = null
+    var repo: GithubRepository? = null
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -18,10 +18,10 @@ class UserRepoPresenter(val router: Router)
     }
 
     fun updateRepoInfo() {
-        repo?.let {
-            viewState.setUserRepoName(it.name)
-            viewState.setCreatedAt(it.createdAt)
-            viewState.setForksCount(it.forksCount)
+        repo?.let { repo ->
+            repo.name?.let { viewState.setUserRepoName(repo.name) }
+            repo.createdAt?.let { viewState.setCreatedAt(repo.createdAt) }
+            repo.forksCount?.let { viewState.setForksCount(repo.forksCount) }
         }
     }
 

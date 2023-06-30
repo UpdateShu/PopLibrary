@@ -1,7 +1,7 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
-import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsersRepo
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
@@ -11,10 +11,11 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
-class UsersPresenter(val uiScheduler: Scheduler,
-                     val usersRepo: IGithubUsersRepo,
+class UsersPresenter(val usersRepo: RetrofitGithubUsers,
                      val router: Router,
-                     val screens: IScreens) : MvpPresenter<UsersView>() {
+                     val screens: IScreens,
+                     val uiScheduler: Scheduler)
+    : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
 

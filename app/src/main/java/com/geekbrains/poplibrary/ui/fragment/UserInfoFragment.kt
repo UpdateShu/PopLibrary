@@ -11,12 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUserInfoBinding
 import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
+import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubRepositoriesCache
+import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
-import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsersRepo
+import com.geekbrains.poplibrary.mvp.model.entity.room.Database
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UserReposRVAdapter
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubRepositories
 import com.geekbrains.poplibrary.ui.image.GlideImageLoader
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -33,11 +37,16 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
     val imageLoader = GlideImageLoader()
 
     val presenter: UserInfoPresenter by moxyPresenter {
+        val repositoriesRepo = RetrofitGithubRepositories(
+            ApiHolder.api,
+            App.networkStatus,
+            RoomGithubRepositoriesCache(Database.getInstance()))
+
         UserInfoPresenter(
-            AndroidSchedulers.mainThread(),
-            RetrofitGithubUsersRepo(ApiHolder.api),
+            repositoriesRepo,
             App.instance.router,
-            App.instance.screens)
+            App.instance.screens,
+            AndroidSchedulers.mainThread())
     }
 
     companion object {
