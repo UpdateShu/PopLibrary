@@ -1,18 +1,23 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
-import com.geekbrains.poplibrary.App
-import com.geekbrains.poplibrary.mvp.model.GithubUser
-import com.geekbrains.poplibrary.mvp.model.GithubUsersRepo
+import android.util.Log
+import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
+
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
+import com.geekbrains.poplibrary.navigation.IScreens
+
 import com.github.terrakok.cicerone.Router
+import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
-class UsersPresenter(
-    val usersRepo: GithubUsersRepo,
-    val router: Router
-) : MvpPresenter<UsersView>() {
+class UsersPresenter(private val usersRepo: RetrofitGithubUsers,
+                     private val router: Router,
+                     private val screens: IScreens,
+                     private val uiScheduler: Scheduler)
+    : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
 
@@ -23,6 +28,9 @@ class UsersPresenter(
         override fun bindView(view: UserItemView) {
             val user = users[view.pos]
             view.setLogin(user.login)
+            user.avatarUrl?.let {
+                view.loadAvatar(it)
+            }
         }
 
         override fun getCount() = users.size
@@ -38,26 +46,19 @@ class UsersPresenter(
 
         usersListPresenter.itemClickListener = { userItemView ->
             val user = usersListPresenter.users[userItemView.pos]
-            router.navigateTo(App.instance.screens.userInfo(user))
+            router.navigateTo(screens.userInfo(user))
         }
     }
 
-    fun subscribeOnUsers() {
-        usersRepo.create()
-            .filter { !it.login.contains('3') }
-            .subscribe({ user ->
-                val index = usersListPresenter.users.size
-                usersListPresenter.users.add(index, user)
-                viewState.addUserToList(index)
-
-                println("onNextUser: $" + user.login)
-            }, { e ->
-                e.message?.let {
-                    viewState.showError(it)
-                    println("onError: ${it}")
-                }
+    private fun subscribeOnUsers() {
+        usersRepo.getUsers()
+            .observeOn(uiScheduler)
+            .subscribe({repos ->
+                usersListPresenter.users.clear()
+                usersListPresenter.users.addAll(repos)
+                viewState.updateUserList()
             }, {
-                println("onComplete")
+                Log.e("GithubUsers", "Error: ${it.message}")
             })
     }
 

@@ -5,14 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUsersBinding
-import com.geekbrains.poplibrary.mvp.model.GithubUsersRepo
-import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
-import com.geekbrains.poplibrary.mvp.view.UsersView
+
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
+import com.geekbrains.poplibrary.ui.image.GlideImageLoader
 import com.geekbrains.poplibrary.ui.showSnackBarNoAction
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
+
+import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
+import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
+import com.geekbrains.poplibrary.mvp.model.entity.room.Database
+
+import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
+import com.geekbrains.poplibrary.mvp.view.UsersView
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -21,10 +31,19 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val binding
         get() = _binding!!
 
-    var adapter: UsersRVAdapter? = null
+    private var adapter: UsersRVAdapter? = null
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router)
+        val usersRepo =  RetrofitGithubUsers(
+            ApiHolder.api,
+            App.networkStatus,
+            RoomGithubUsersCache(Database.getInstance()))
+
+        UsersPresenter(usersRepo,
+            App.instance.router,
+            App.instance.screens,
+            AndroidSchedulers.mainThread()
+        )
     }
 
     companion object {
@@ -46,7 +65,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     override fun init() {
         binding.rUsers.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
         binding.rUsers.adapter = adapter
     }
 
