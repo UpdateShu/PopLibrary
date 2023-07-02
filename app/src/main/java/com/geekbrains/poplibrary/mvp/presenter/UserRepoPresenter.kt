@@ -6,7 +6,7 @@ import com.github.terrakok.cicerone.Router
 
 import moxy.MvpPresenter
 
-class UserRepoPresenter(val router: Router)
+class UserRepoPresenter(private val router: Router)
     : MvpPresenter<UserRepoView>() {
 
     var repo: GithubRepository? = null
@@ -17,7 +17,7 @@ class UserRepoPresenter(val router: Router)
         updateRepoInfo()
     }
 
-    fun updateRepoInfo() {
+    private fun updateRepoInfo() {
         repo?.let { repo ->
             repo.name?.let { viewState.setUserRepoName(repo.name) }
             repo.createdAt?.let { viewState.setCreatedAt(repo.createdAt) }

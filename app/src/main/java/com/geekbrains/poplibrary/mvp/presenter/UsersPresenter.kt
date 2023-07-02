@@ -1,20 +1,22 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
+import android.util.Log
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
+
+import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.navigation.IScreens
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
-class UsersPresenter(val usersRepo: RetrofitGithubUsers,
-                     val router: Router,
-                     val screens: IScreens,
-                     val uiScheduler: Scheduler)
+class UsersPresenter(private val usersRepo: RetrofitGithubUsers,
+                     private val router: Router,
+                     private val screens: IScreens,
+                     private val uiScheduler: Scheduler)
     : MvpPresenter<UsersView>() {
 
     class UsersListPresenter : IUserListPresenter {
@@ -48,13 +50,15 @@ class UsersPresenter(val usersRepo: RetrofitGithubUsers,
         }
     }
 
-    fun subscribeOnUsers() {
+    private fun subscribeOnUsers() {
         usersRepo.getUsers()
             .observeOn(uiScheduler)
             .subscribe({repos ->
                 usersListPresenter.users.clear()
                 usersListPresenter.users.addAll(repos)
                 viewState.updateUserList()
+            }, {
+                Log.e("GithubUsers", "Error: ${it.message}")
             })
     }
 

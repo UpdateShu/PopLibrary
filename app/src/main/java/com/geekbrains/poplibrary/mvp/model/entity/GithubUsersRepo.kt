@@ -33,7 +33,7 @@ class GithubUsersRepo {
         }
     }
 
-    fun randomResultOperation() : Boolean {
+    private fun randomResultOperation() : Boolean {
         return listOf(true, false, true)[Random.nextInt(2)]
     }
 

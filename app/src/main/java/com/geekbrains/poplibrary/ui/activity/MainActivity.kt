@@ -1,13 +1,15 @@
 package com.geekbrains.poplibrary.ui.activity
 
 import android.os.Bundle
+
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.R
 import com.geekbrains.poplibrary.mvp.presenter.MainPresenter
-import com.geekbrains.poplibrary.databinding.ActivityMainBinding
 import com.geekbrains.poplibrary.mvp.view.MainViewImpl
 import com.geekbrains.poplibrary.mvp.view.rxjavatest.Creation
 import com.geekbrains.poplibrary.mvp.view.rxjavatest.Operators
+import com.geekbrains.poplibrary.databinding.ActivityMainBinding
+
 import com.github.terrakok.cicerone.androidx.AppNavigator
 import moxy.MvpAppCompatActivity
 import moxy.ktx.moxyPresenter
@@ -20,7 +22,7 @@ class MainActivity : MvpAppCompatActivity(), MainViewImpl {
         MainPresenter(App.instance.router, App.instance.screens)
     }
 
-    val navigator = AppNavigator(this, R.id.container)
+    private val navigator = AppNavigator(this, R.id.container)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

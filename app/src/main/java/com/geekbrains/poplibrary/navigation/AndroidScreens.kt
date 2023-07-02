@@ -3,6 +3,7 @@ package com.geekbrains.poplibrary.navigation
 import android.os.Bundle
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
+
 import com.geekbrains.poplibrary.ui.fragment.UserInfoFragment
 import com.geekbrains.poplibrary.ui.fragment.UserRepoFragment
 import com.geekbrains.poplibrary.ui.fragment.UsersFragment

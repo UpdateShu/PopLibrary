@@ -6,9 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+
 import com.geekbrains.poplibrary.mvp.model.entity.room.RoomGithubUser
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface UserDao {
@@ -20,8 +19,6 @@ interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(users: List<RoomGithubUser>)
-
-    abstract fun insertAll(any: Any?): Any
 
     @Update
     fun update(user: RoomGithubUser)

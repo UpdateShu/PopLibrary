@@ -16,7 +16,7 @@ class UsersRVAdapter(val presenter : IUserListPresenter,
                      val imageLoader : IImageLoader<ImageView>
 ) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
+    inner class ViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
         UserItemView {
         override var pos = INVALID_INDEX
 

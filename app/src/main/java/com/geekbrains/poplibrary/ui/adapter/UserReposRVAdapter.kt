@@ -10,7 +10,7 @@ import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
 
 class UserReposRVAdapter(val presenter: IUserRepoListPresenter) : RecyclerView.Adapter<UserReposRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val vb: ItemRepoBinding) : RecyclerView.ViewHolder(vb.root),
+    inner class ViewHolder(private val vb: ItemRepoBinding) : RecyclerView.ViewHolder(vb.root),
         UserRepoItemView {
         override var pos = INVALID_INDEX
 

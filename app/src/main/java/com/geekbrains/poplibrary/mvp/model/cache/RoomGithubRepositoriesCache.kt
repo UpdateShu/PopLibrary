@@ -4,6 +4,7 @@ import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.room.Database
 import com.geekbrains.poplibrary.mvp.model.entity.room.RoomGithubRepository
+
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -21,9 +22,10 @@ class RoomGithubRepositoriesCache(private val db: Database) : IGithubRepositorie
                 repository.name ?: "",
                 repository.createdAt ?: "",
                 repository.forksCount ?: 0,
-                repository.forksUrl ?: "",
+                repository.forksUrl,
                 roomUser.id)
         }
+        db.repositoryDao.insert(roomRepositories)
     }.subscribeOn(Schedulers.io())
 
     override fun getRepositoriesFromDB(user: GithubUser) = Single.fromCallable {

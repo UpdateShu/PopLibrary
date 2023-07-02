@@ -1,5 +1,6 @@
 package com.geekbrains.poplibrary.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,14 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUserInfoBinding
+
 import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
 import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubRepositoriesCache
-import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.room.Database
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
+
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UserReposRVAdapter
 import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubRepositories
@@ -33,8 +34,8 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
     private val binding
         get() = _binding!!
 
-    var adapter: UserReposRVAdapter? = null
-    val imageLoader = GlideImageLoader()
+    private var adapter: UserReposRVAdapter? = null
+    private val imageLoader = GlideImageLoader()
 
     val presenter: UserInfoPresenter by moxyPresenter {
         val repositoriesRepo = RetrofitGithubRepositories(
@@ -89,6 +90,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         imageLoader.loadInto(avatarUrl, binding.infoAvatar)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun updateUserRepoList() {
         adapter?.notifyDataSetChanged()
     }

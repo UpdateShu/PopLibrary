@@ -1,12 +1,14 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
 import android.annotation.SuppressLint
+import android.util.Log
+
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserRepoListPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
+
 import com.geekbrains.poplibrary.navigation.IScreens
 import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubRepositories
 
@@ -14,10 +16,10 @@ import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
 
-class UserInfoPresenter(val usersRepo: RetrofitGithubRepositories,
-                        val router: Router,
-                        val screens: IScreens,
-                        val uiScheduler: Scheduler)
+class UserInfoPresenter(private val usersRepo: RetrofitGithubRepositories,
+                        private val router: Router,
+                        private val screens: IScreens,
+                        private val uiScheduler: Scheduler)
     : MvpPresenter<UserInfoView>() {
 
     var user : GithubUser? = null
@@ -49,7 +51,7 @@ class UserInfoPresenter(val usersRepo: RetrofitGithubRepositories,
         }
     }
 
-    fun updateUserInfo() {
+    private fun updateUserInfo() {
         user?.let {
             viewState.setUserLogin(it.login)
             it.avatarUrl?.let { avatarUrl ->
@@ -61,13 +63,15 @@ class UserInfoPresenter(val usersRepo: RetrofitGithubRepositories,
     }
 
     @SuppressLint("CheckResult")
-    fun subscribeOnUserRepos(user: GithubUser) {
+    private fun subscribeOnUserRepos(user: GithubUser) {
         usersRepo.getRepositories(user)
             .observeOn(uiScheduler)
             .subscribe({repos ->
                 userReposListPresenter.repos.clear()
                 userReposListPresenter.repos.addAll(repos)
                 viewState.updateUserRepoList()
+            }, {
+                Log.e("GithubUsers", "Error: ${it.message}")
             })
     }
 

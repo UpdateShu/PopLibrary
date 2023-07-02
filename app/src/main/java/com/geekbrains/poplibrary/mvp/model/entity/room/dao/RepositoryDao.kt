@@ -6,9 +6,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+
 import com.geekbrains.poplibrary.mvp.model.entity.room.RoomGithubRepository
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface RepositoryDao {
