@@ -2,11 +2,11 @@ package com.geekbrains.poplibrary.mvp.presenter
 
 import android.util.Log
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
+import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
 
-import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.navigation.IScreens
 
 import com.github.terrakok.cicerone.Router
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class UsersPresenter : MvpPresenter<UsersView>() {
 
-    @Inject lateinit var usersRepo: RetrofitGithubUsers
+    @Inject lateinit var usersRepo: IGithubUsers
 
     @Inject lateinit var router: Router
 

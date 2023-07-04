@@ -5,12 +5,12 @@ import android.util.Log
 
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
+import com.geekbrains.poplibrary.mvp.model.repo.IGithubRepositories
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserRepoListPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
 
 import com.geekbrains.poplibrary.navigation.IScreens
-import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubRepositories
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
-    @Inject lateinit var userRepositoriesRepo: RetrofitGithubRepositories
+    @Inject lateinit var userRepositoriesRepo: IGithubRepositories
 
     @Inject lateinit var router: Router
 
