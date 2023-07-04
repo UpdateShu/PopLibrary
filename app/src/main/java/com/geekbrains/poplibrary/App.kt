@@ -1,26 +1,25 @@
 package com.geekbrains.poplibrary
 
 import android.app.Application
-import com.geekbrains.poplibrary.navigation.AndroidScreens
-import com.github.terrakok.cicerone.Cicerone
-import com.github.terrakok.cicerone.Router
+import com.geekbrains.poplibrary.di.AppComponent
+import com.geekbrains.poplibrary.di.DaggerAppComponent
+import com.geekbrains.poplibrary.di.modules.AppModule
 
 class App : Application() {
+
+    lateinit var appComponent: AppComponent
+        private set
+
     companion object {
         lateinit var instance: App
     }
 
-    private val cicerone: Cicerone<Router> by lazy {
-        Cicerone.create()
-    }
-
-    val navigatorHolder get() = cicerone.getNavigatorHolder()
-    val router get() = cicerone.router
-
-    val screens = AndroidScreens()
-
     override fun onCreate() {
         super.onCreate()
         instance = this
+
+        appComponent = DaggerAppComponent.builder()
+            .appModule(AppModule(this))
+            .build()
     }
 }

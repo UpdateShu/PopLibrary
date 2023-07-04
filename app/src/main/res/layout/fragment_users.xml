@@ -8,8 +8,8 @@
         android:id="@+id/r_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="16dp"
+        android:paddingTop="@dimen/rv_padding"
         android:clipToPadding="false"
-        android:paddingBottom="16dp" />
+        android:paddingBottom="@dimen/rv_padding" />
 
 </LinearLayout>

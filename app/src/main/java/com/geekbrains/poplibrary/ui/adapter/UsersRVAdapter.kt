@@ -2,21 +2,33 @@ package com.geekbrains.poplibrary.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+
 import com.geekbrains.poplibrary.databinding.ItemUserBinding
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
+import com.geekbrains.poplibrary.mvp.view.IImageLoader
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
+import javax.inject.Inject
 
 const val INVALID_INDEX = -1
 
-class UsersRVAdapter(val presenter : IUserListPresenter) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
+class UsersRVAdapter(val presenter : IUserListPresenter)
+    : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
+
+    inner class ViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root),
         UserItemView {
         override var pos = INVALID_INDEX
 
         override fun setLogin(text: String) = with(vb) {
             tvLogin.text = text
+        }
+
+        override fun loadAvatar(url: String) {
+            imageLoader.loadInto(url, vb.ivAvatar)
         }
     }
 
