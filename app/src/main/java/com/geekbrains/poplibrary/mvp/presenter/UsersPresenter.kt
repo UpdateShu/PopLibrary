@@ -6,18 +6,23 @@ import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView
 
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
+import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsers
 import com.geekbrains.poplibrary.navigation.IScreens
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class UsersPresenter(private val usersRepo: RetrofitGithubUsers,
-                     private val router: Router,
-                     private val screens: IScreens,
-                     private val uiScheduler: Scheduler)
-    : MvpPresenter<UsersView>() {
+class UsersPresenter : MvpPresenter<UsersView>() {
+
+    @Inject lateinit var usersRepo: RetrofitGithubUsers
+
+    @Inject lateinit var router: Router
+
+    @Inject lateinit var screens: IScreens
+
+    @Inject lateinit var uiScheduler: Scheduler
 
     class UsersListPresenter : IUserListPresenter {
 

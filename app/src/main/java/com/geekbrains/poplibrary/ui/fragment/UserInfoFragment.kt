@@ -6,27 +6,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUserInfoBinding
 
-import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
-import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubRepositoriesCache
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
-import com.geekbrains.poplibrary.mvp.model.entity.room.Database
 import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
+import com.geekbrains.poplibrary.mvp.view.IImageLoader
 
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UserReposRVAdapter
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubRepositories
-import com.geekbrains.poplibrary.ui.image.GlideImageLoader
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
+import javax.inject.Inject
 
 class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListener {
 
@@ -35,28 +32,23 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         get() = _binding!!
 
     private var adapter: UserReposRVAdapter? = null
-    private val imageLoader = GlideImageLoader()
+
+    @Inject
+    lateinit var imageLoader: IImageLoader<ImageView>
 
     val presenter: UserInfoPresenter by moxyPresenter {
-        val repositoriesRepo = RetrofitGithubRepositories(
-            ApiHolder.api,
-            App.networkStatus,
-            RoomGithubRepositoriesCache(Database.getInstance()))
-
-        UserInfoPresenter(
-            repositoriesRepo,
-            App.instance.router,
-            App.instance.screens,
-            AndroidSchedulers.mainThread())
+        UserInfoPresenter().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     companion object {
         const val GIT_USER = "user"
 
-        fun newInstance(bundle: Bundle) : UserInfoFragment {
-            val fragment = UserInfoFragment()
-            fragment.arguments = bundle
-            return fragment
+        fun newInstance(bundle: Bundle) = UserInfoFragment().apply {
+            arguments = bundle
+
+            App.instance.appComponent.inject(this)
         }
     }
 

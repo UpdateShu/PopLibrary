@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary.ui.fragment.repo
+package com.geekbrains.poplibrary.mvp.model.repo
 
 import com.geekbrains.poplibrary.mvp.model.api.IDataSource
 import com.geekbrains.poplibrary.mvp.model.cache.IGithubUsersCache

@@ -11,18 +11,11 @@ import com.geekbrains.poplibrary.databinding.FragmentUsersBinding
 
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
-import com.geekbrains.poplibrary.ui.image.GlideImageLoader
 import com.geekbrains.poplibrary.ui.showSnackBarNoAction
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubUsers
-
-import com.geekbrains.poplibrary.mvp.model.api.ApiHolder
-import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
-import com.geekbrains.poplibrary.mvp.model.entity.room.Database
 
 import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
 import com.geekbrains.poplibrary.mvp.view.UsersView
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -34,16 +27,9 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private var adapter: UsersRVAdapter? = null
 
     val presenter: UsersPresenter by moxyPresenter {
-        val usersRepo =  RetrofitGithubUsers(
-            ApiHolder.api,
-            App.networkStatus,
-            RoomGithubUsersCache(Database.getInstance()))
-
-        UsersPresenter(usersRepo,
-            App.instance.router,
-            App.instance.screens,
-            AndroidSchedulers.mainThread()
-        )
+        UsersPresenter().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     companion object {
@@ -65,7 +51,9 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     override fun init() {
         binding.rUsers.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter, GlideImageLoader())
+        adapter = UsersRVAdapter(presenter.usersListPresenter).apply {
+            App.instance.appComponent.inject(this)
+        }
         binding.rUsers.adapter = adapter
     }
 

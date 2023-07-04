@@ -24,7 +24,9 @@ class UserRepoFragment : MvpAppCompatFragment(), UserRepoView, BackButtonListene
         get() = _binding!!
 
     val presenter: UserRepoPresenter by moxyPresenter {
-        UserRepoPresenter(App.instance.router)
+        UserRepoPresenter().apply {
+            App.instance.appComponent.inject(this)
+        }
     }
 
     companion object {

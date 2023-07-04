@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary.ui.fragment.repo
+package com.geekbrains.poplibrary.mvp.model.repo
 
 import io.reactivex.rxjava3.core.Single
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser

@@ -5,9 +5,11 @@ import com.geekbrains.poplibrary.mvp.view.UserRepoView
 import com.github.terrakok.cicerone.Router
 
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class UserRepoPresenter(private val router: Router)
-    : MvpPresenter<UserRepoView>() {
+class UserRepoPresenter : MvpPresenter<UserRepoView>() {
+
+    @Inject lateinit var router: Router
 
     var repo: GithubRepository? = null
 

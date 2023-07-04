@@ -10,17 +10,22 @@ import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
 
 import com.geekbrains.poplibrary.navigation.IScreens
-import com.geekbrains.poplibrary.ui.fragment.repo.RetrofitGithubRepositories
+import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubRepositories
 
 import com.github.terrakok.cicerone.Router
 import io.reactivex.rxjava3.core.Scheduler
 import moxy.MvpPresenter
+import javax.inject.Inject
 
-class UserInfoPresenter(private val usersRepo: RetrofitGithubRepositories,
-                        private val router: Router,
-                        private val screens: IScreens,
-                        private val uiScheduler: Scheduler)
-    : MvpPresenter<UserInfoView>() {
+class UserInfoPresenter : MvpPresenter<UserInfoView>() {
+
+    @Inject lateinit var userRepositoriesRepo: RetrofitGithubRepositories
+
+    @Inject lateinit var router: Router
+
+    @Inject lateinit var screens: IScreens
+
+    @Inject lateinit var uiScheduler: Scheduler
 
     var user : GithubUser? = null
 
@@ -64,7 +69,7 @@ class UserInfoPresenter(private val usersRepo: RetrofitGithubRepositories,
 
     @SuppressLint("CheckResult")
     private fun subscribeOnUserRepos(user: GithubUser) {
-        usersRepo.getRepositories(user)
+        userRepositoriesRepo.getRepositories(user)
             .observeOn(uiScheduler)
             .subscribe({repos ->
                 userReposListPresenter.repos.clear()
