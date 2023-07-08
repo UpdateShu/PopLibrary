@@ -9,5 +9,7 @@ interface UserInfoView : MvpView {
     fun init()
     fun setUserLogin(login: String)
     fun setUserAvatar(avatarUrl: String)
+    fun setUserFollowers(followerUsersCount: Int)
+    fun setUserFollowings(followingUsersCount: Int)
     fun updateUserRepoList()
 }

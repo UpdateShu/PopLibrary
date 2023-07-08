@@ -7,4 +7,8 @@
     <string name="user_repo_description">Наименование репозитория</string>
     <string name="repo_created">Дата создания</string>
     <string name="repo_forks_count">Кол-во веток:</string>
+
+    <string name="followers_description">Подписчики</string>
+    <string name="followings_description">Подписки</string>
+    <string name="txt_follow_title">Заголовок</string>
 </resources>

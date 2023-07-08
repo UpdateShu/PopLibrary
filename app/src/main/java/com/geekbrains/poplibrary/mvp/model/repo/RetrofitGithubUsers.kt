@@ -24,4 +24,21 @@ class RetrofitGithubUsers(
                 cache.getUsersFromDB()
             }
         }.subscribeOn(Schedulers.io())
+
+    override fun getFollowers(user: GithubUser): Single<List<GithubUser>> {
+        user.followersUrl?.let {
+            return api.getFollowers(it).subscribeOn(Schedulers.io())
+        }
+        return Single.error<List<GithubUser>>(
+            RuntimeException("No followers")).subscribeOn(Schedulers.io())
+    }
+
+    override fun getFollowings(user: GithubUser): Single<List<GithubUser>> {
+        user.followingUrl?.let {
+            val url = it.replace("following{/other_user}", "following")//оригинальный запрос не работает
+            return api.getFollowing(url).subscribeOn(Schedulers.io())
+        }
+        return Single.error<List<GithubUser>>(
+            RuntimeException("No following")).subscribeOn(Schedulers.io())
+    }
 }

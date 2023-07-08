@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.geekbrains.poplibrary.App
+import com.geekbrains.poplibrary.R
 import com.geekbrains.poplibrary.databinding.FragmentUserInfoBinding
 
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
@@ -72,6 +73,13 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         binding.rRepos.layoutManager = LinearLayoutManager(context)
         adapter = UserReposRVAdapter(presenter.userReposListPresenter)
         binding.rRepos.adapter = adapter
+
+        binding.btnFollowers.setOnClickListener {
+            presenter.showFollowers(getString(R.string.followers_description))
+        }
+        binding.btnFollowings.setOnClickListener {
+            presenter.showFollowings(getString(R.string.followings_description))
+        }
     }
 
     override fun setUserLogin(login: String) {
@@ -80,6 +88,18 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
 
     override fun setUserAvatar(avatarUrl: String) {
         imageLoader.loadInto(avatarUrl, binding.infoAvatar)
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setUserFollowers(followerUsersCount: Int) {
+        val description = getString(R.string.followers_description)
+        binding.btnFollowers.text = "${description}: $followerUsersCount"
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun setUserFollowings(followingUsersCount: Int) {
+        val description = getString(R.string.followings_description)
+        binding.btnFollowings.text = "${description}: $followingUsersCount"
     }
 
     @SuppressLint("NotifyDataSetChanged")

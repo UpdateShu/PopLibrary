@@ -6,6 +6,7 @@ import android.util.Log
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
 import com.geekbrains.poplibrary.mvp.model.repo.IGithubRepositories
+import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserRepoListPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
@@ -19,6 +20,8 @@ import javax.inject.Inject
 
 class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
+    @Inject lateinit var usersRepo: IGithubUsers
+
     @Inject lateinit var userRepositoriesRepo: IGithubRepositories
 
     @Inject lateinit var router: Router
@@ -28,6 +31,8 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
     @Inject lateinit var uiScheduler: Scheduler
 
     var user : GithubUser? = null
+    private var followerUsers : MutableList<GithubUser> = mutableListOf()
+    private var followingUsers : MutableList<GithubUser> = mutableListOf()
 
     class UserReposListPresenter : IUserRepoListPresenter {
         val repos = mutableListOf<GithubRepository>()
@@ -56,6 +61,14 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
         }
     }
 
+    fun showFollowers(title: String) {
+        router.navigateTo(screens.followUsers(title, ArrayList(followerUsers)))
+    }
+
+    fun showFollowings(title: String) {
+        router.navigateTo(screens.followUsers(title, ArrayList(followingUsers)))
+    }
+
     private fun updateUserInfo() {
         user?.let {
             viewState.setUserLogin(it.login)
@@ -63,6 +76,8 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
                 viewState.setUserAvatar(avatarUrl)
             }
             subscribeOnUserRepos(it)
+            subscribeOnFollowerUsers(it)
+            subscribeOnFollowingUsers(it)
             //subscribeOnUserRepos("https://api.github.com/users/UpdateShu/repos")
         }
     }
@@ -79,6 +94,32 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
                 Log.e("GithubUsers", "Error: ${it.message}")
             })
     }
+
+    private fun subscribeOnFollowerUsers(user: GithubUser) {
+        usersRepo.getFollowers(user)
+            .observeOn(uiScheduler)
+            .subscribe({ followers ->
+                followerUsers.clear()
+                followerUsers.addAll(followers)
+                viewState.setUserFollowers(followerUsers.size)
+            }, {
+                Log.e("GithubUsers", "Error: ${it.message}")
+            })
+        }
+
+
+    private fun subscribeOnFollowingUsers(user: GithubUser) {
+        usersRepo.getFollowings(user)
+            .observeOn(uiScheduler)
+            .subscribe({ followings ->
+                followingUsers.clear()
+                followingUsers.addAll(followings)
+                viewState.setUserFollowings(followingUsers.size)
+            }, {
+                Log.e("GithubUsers", "Error: ${it.message}")
+            })
+        }
+
 
     fun backPressed() : Boolean {
         router.exit()

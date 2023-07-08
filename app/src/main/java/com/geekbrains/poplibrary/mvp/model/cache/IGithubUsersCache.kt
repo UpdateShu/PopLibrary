@@ -8,4 +8,5 @@ import io.reactivex.rxjava3.core.Single
 interface IGithubUsersCache {
     fun insertUsersToDB(users: List<GithubUser>) : Completable
     fun getUsersFromDB() : Single<List<GithubUser>>
+
 }

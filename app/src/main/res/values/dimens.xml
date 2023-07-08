@@ -8,4 +8,5 @@
     <dimen name="small_img_size">50dp</dimen>
     <dimen name="img_margin">20dp</dimen>
     <dimen name="repo_info_padding">20dp</dimen>
+    <dimen name="title_textSize">24sp</dimen>
 </resources>

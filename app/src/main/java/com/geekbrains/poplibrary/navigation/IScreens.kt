@@ -8,4 +8,5 @@ interface IScreens {
     fun users() : Screen
     fun userInfo(user: GithubUser) : Screen
     fun userRepo(repo: GithubRepository) : Screen
+    fun followUsers(title: String, followUsers: ArrayList<GithubUser>) : Screen
 }

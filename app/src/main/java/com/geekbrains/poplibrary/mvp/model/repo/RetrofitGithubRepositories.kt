@@ -21,7 +21,8 @@ class RetrofitGithubRepositories(
                     .flatMap { repositories ->
                         cache.insertRepositoriesToDB(user, repositories).toSingleDefault(repositories)
                     }
-            } ?: Single.error<List<GithubRepository>>(RuntimeException("User has no repos url")).subscribeOn(Schedulers.io())
+            } ?: Single.error<List<GithubRepository>>(
+                RuntimeException("User has no repos url")).subscribeOn(Schedulers.io())
         } else {
             cache.getRepositoriesFromDB(user)
         }

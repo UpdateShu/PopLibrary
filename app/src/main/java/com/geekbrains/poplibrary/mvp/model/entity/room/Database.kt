@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.geekbrains.poplibrary.mvp.model.entity.room.dao.RepositoryDao
 import com.geekbrains.poplibrary.mvp.model.entity.room.dao.UserDao
 
-@androidx.room.Database(entities = [RoomGithubUser::class, RoomGithubRepository::class], version = 1)
+@androidx.room.Database(entities = [RoomGithubUser::class, RoomGithubRepository::class], version = 2)
 abstract class Database : RoomDatabase() {
     abstract val userDao: UserDao
     abstract val repositoryDao: RepositoryDao

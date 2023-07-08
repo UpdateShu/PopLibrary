@@ -7,7 +7,7 @@ import com.github.terrakok.cicerone.Router
 import moxy.MvpPresenter
 import javax.inject.Inject
 
-class MainPresenter() : MvpPresenter<MainViewImpl>() {
+class MainPresenter : MvpPresenter<MainViewImpl>() {
 
     @Inject lateinit var router: Router
 

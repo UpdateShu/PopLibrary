@@ -8,5 +8,7 @@ data class RoomGithubUser(
     @PrimaryKey var id: String,
     var login: String,
     var avatarUrl: String?,
+    var followersUrl: String? = null,
+    var followingUrl: String? = null,
     var reposUrl: String?
 )

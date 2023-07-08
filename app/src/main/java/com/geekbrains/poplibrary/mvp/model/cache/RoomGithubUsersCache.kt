@@ -16,6 +16,8 @@ class RoomGithubUsersCache(private val db: Database) : IGithubUsersCache {
                 user.id,
                 user.login,
                 user.avatarUrl ?: "",
+                user.followersUrl ?: "",
+                user.followingUrl ?: "",
                 user.reposUrl ?: ""
             )
         }
@@ -27,6 +29,8 @@ class RoomGithubUsersCache(private val db: Database) : IGithubUsersCache {
             roomUser.id,
             roomUser.login,
             roomUser.avatarUrl,
+            roomUser.followersUrl,
+            roomUser.followingUrl,
             roomUser.reposUrl)
         }
     }.subscribeOn(Schedulers.io())

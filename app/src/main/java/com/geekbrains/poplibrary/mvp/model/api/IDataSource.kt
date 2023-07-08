@@ -12,6 +12,14 @@ interface IDataSource {
     fun getUsers() : Single<List<GithubUser>>
 
     @GET
+    fun getFollowers(@Url followersUrl: String)
+        : Single<List<GithubUser>>
+
+    @GET
+    fun getFollowing(@Url followingUrl: String)
+        : Single<List<GithubUser>>
+
+    @GET
     fun getUserRepositories(@Url reposUrl: String)
         : Single<List<GithubRepository>>
 }

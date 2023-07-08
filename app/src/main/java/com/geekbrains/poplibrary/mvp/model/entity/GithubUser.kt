@@ -9,5 +9,6 @@ data class GithubUser(
     @Expose val id: String,
     @Expose val login: String,
     @Expose val avatarUrl: String? = null,
-    @Expose val reposUrl: String? = null
-) : Parcelable
+    @Expose val reposUrl: String? = null,
+    @Expose val followersUrl: String? = null,
+    @Expose val followingUrl: String? = null) : Parcelable

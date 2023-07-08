@@ -6,6 +6,7 @@ import com.geekbrains.poplibrary.di.modules.CacheModule
 import com.geekbrains.poplibrary.di.modules.CiceroneModule
 import com.geekbrains.poplibrary.di.modules.ImageModule
 import com.geekbrains.poplibrary.di.modules.RepoModule
+import com.geekbrains.poplibrary.mvp.presenter.FollowPresenter
 
 import com.geekbrains.poplibrary.mvp.presenter.MainPresenter
 import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
@@ -36,7 +37,7 @@ interface AppComponent {
     fun inject(mainPresenter: MainPresenter)
     fun inject(usersPresenter: UsersPresenter)
     fun inject(usersRVAdapter: UsersRVAdapter)
-
+    fun inject(followPresenter: FollowPresenter)
     fun inject(userRepoPresenter: UserRepoPresenter)
     fun inject(userInfoPresenter: UserInfoPresenter)
 
