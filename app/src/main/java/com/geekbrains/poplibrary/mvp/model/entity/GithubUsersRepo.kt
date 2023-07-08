@@ -1,4 +1,4 @@
-package com.geekbrains.poplibrary.mvp.model
+package com.geekbrains.poplibrary.mvp.model.entity
 
 import io.reactivex.rxjava3.core.Observable
 import java.lang.RuntimeException
@@ -33,20 +33,20 @@ class GithubUsersRepo {
         }
     }
 
-    fun randomResultOperation() : Boolean {
+    private fun randomResultOperation() : Boolean {
         return listOf(true, false, true)[Random.nextInt(2)]
     }
 
     private val users = listOf (
-        GithubUser("login1"),
-        GithubUser("login2"),
-        GithubUser("login3"),
-        GithubUser("login4"),
-        GithubUser("login5"),
-        GithubUser("login6"),
-        GithubUser("login7"),
-        GithubUser("login8"),
-        GithubUser("login9"),
-        GithubUser("login10")
+        GithubUser("","login1"),
+        GithubUser("","login2"),
+        GithubUser("","login3"),
+        GithubUser("","login4"),
+        GithubUser("","login5"),
+        GithubUser("","login6"),
+        GithubUser("","login7"),
+        GithubUser("","login8"),
+        GithubUser("","login9"),
+        GithubUser("","login10")
     )
 }
