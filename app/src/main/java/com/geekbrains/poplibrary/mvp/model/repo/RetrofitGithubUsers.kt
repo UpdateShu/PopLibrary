@@ -35,7 +35,8 @@ class RetrofitGithubUsers(
 
     override fun getFollowings(user: GithubUser): Single<List<GithubUser>> {
         user.followingUrl?.let {
-            val url = it.replace("following{/other_user}", "following")//оригинальный запрос не работает
+            //оригинальный запрос не работает
+            val url = it.replace("following{/other_user}", "following")
             return api.getFollowing(url).subscribeOn(Schedulers.io())
         }
         return Single.error<List<GithubUser>>(
