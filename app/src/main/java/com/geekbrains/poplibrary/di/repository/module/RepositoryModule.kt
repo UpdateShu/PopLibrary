@@ -31,7 +31,7 @@ class RepositoryModule {
         api: IDataSource,
         networkStatus: INetworkStatus,
         cache: IGithubRepositoriesCache,
-    ): IGithubRepositories = RetrofitGithubRepositories(api, networkStatus, cache)
+    ):      IGithubRepositories = RetrofitGithubRepositories(api, networkStatus, cache)
 
     @RepositoryScope
     @Provides

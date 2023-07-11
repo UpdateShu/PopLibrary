@@ -39,7 +39,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
 
     val presenter: UserInfoPresenter by moxyPresenter {
         UserInfoPresenter().apply {
-            App.instance.initRepositorySubcomponent()?.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
         }
     }
 
@@ -49,7 +49,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         fun newInstance(bundle: Bundle) = UserInfoFragment().apply {
             arguments = bundle
 
-            App.instance.repositorySubcomponent?.inject(this)
+            App.instance.initRepositorySubcomponent()?.inject(this)
         }
     }
 

@@ -6,16 +6,9 @@ import com.geekbrains.poplibrary.di.modules.CiceroneModule
 import com.geekbrains.poplibrary.di.modules.DatabaseModule
 import com.geekbrains.poplibrary.di.modules.ImageModule
 import com.geekbrains.poplibrary.di.user.UserSubcomponent
-import com.geekbrains.poplibrary.mvp.presenter.FollowPresenter
 
 import com.geekbrains.poplibrary.mvp.presenter.MainPresenter
-import com.geekbrains.poplibrary.mvp.presenter.UserInfoPresenter
-import com.geekbrains.poplibrary.mvp.presenter.UserRepoPresenter
-import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
-
 import com.geekbrains.poplibrary.ui.activity.MainActivity
-import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
-import com.geekbrains.poplibrary.ui.fragment.UserInfoFragment
 
 import dagger.Component
 import javax.inject.Singleton
