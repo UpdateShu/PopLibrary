@@ -2,11 +2,13 @@ package com.geekbrains.poplibrary.mvp.presenter
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.geekbrains.poplibrary.di.repository.module.IRepositoryScopeContainer
 
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.entity.GithubRepository
+import com.geekbrains.poplibrary.mvp.model.repo.IGithubFollow
 import com.geekbrains.poplibrary.mvp.model.repo.IGithubRepositories
-import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsers
+
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserRepoListPresenter
 import com.geekbrains.poplibrary.mvp.view.UserInfoView
 import com.geekbrains.poplibrary.mvp.view.list.UserRepoItemView
@@ -20,15 +22,14 @@ import javax.inject.Inject
 
 class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
-    @Inject lateinit var usersRepo: IGithubUsers
-
     @Inject lateinit var userRepositoriesRepo: IGithubRepositories
+    @Inject lateinit var userFollowRepo: IGithubFollow
 
     @Inject lateinit var router: Router
-
     @Inject lateinit var screens: IScreens
-
     @Inject lateinit var uiScheduler: Scheduler
+
+    @Inject lateinit var repositoryScopeContainer: IRepositoryScopeContainer
 
     var user : GithubUser? = null
     private var followerUsers : MutableList<GithubUser> = mutableListOf()
@@ -96,7 +97,7 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
     }
 
     private fun subscribeOnFollowerUsers(user: GithubUser) {
-        usersRepo.getFollowers(user)
+        userFollowRepo.getFollowers(user)
             .observeOn(uiScheduler)
             .subscribe({ followers ->
                 followerUsers.clear()
@@ -109,7 +110,7 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
 
     private fun subscribeOnFollowingUsers(user: GithubUser) {
-        usersRepo.getFollowings(user)
+        userFollowRepo.getFollowings(user)
             .observeOn(uiScheduler)
             .subscribe({ followings ->
                 followingUsers.clear()
@@ -124,5 +125,10 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
     fun backPressed() : Boolean {
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        repositoryScopeContainer.releaseRepositoryScope()
     }
 }

@@ -1,5 +1,6 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
+import com.geekbrains.poplibrary.di.user.module.IUserScopeContainer
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.presenter.list.IFollowListPresenter
 import com.geekbrains.poplibrary.mvp.view.FollowView

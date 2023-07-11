@@ -39,7 +39,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
 
     val presenter: UserInfoPresenter by moxyPresenter {
         UserInfoPresenter().apply {
-            App.instance.appComponent.inject(this)
+            App.instance.initRepositorySubcomponent()?.inject(this)
         }
     }
 
@@ -49,7 +49,7 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         fun newInstance(bundle: Bundle) = UserInfoFragment().apply {
             arguments = bundle
 
-            App.instance.appComponent.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
         }
     }
 
@@ -65,7 +65,8 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.user = arguments?.getParcelable(GIT_USER,
+        presenter.user = arguments?.getParcelable(
+            GIT_USER,
             GithubUser::class.java)
     }
 

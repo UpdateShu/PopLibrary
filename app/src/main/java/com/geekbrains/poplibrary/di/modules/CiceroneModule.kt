@@ -2,9 +2,11 @@ package com.geekbrains.poplibrary.di.modules
 
 import com.geekbrains.poplibrary.navigation.AndroidScreens
 import com.geekbrains.poplibrary.navigation.IScreens
+
 import com.github.terrakok.cicerone.Cicerone
 import com.github.terrakok.cicerone.NavigatorHolder
 import com.github.terrakok.cicerone.Router
+
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

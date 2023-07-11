@@ -1,6 +1,7 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
 import android.util.Log
+import com.geekbrains.poplibrary.di.user.module.IUserScopeContainer
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsers
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
@@ -17,12 +18,11 @@ import javax.inject.Inject
 class UsersPresenter : MvpPresenter<UsersView>() {
 
     @Inject lateinit var usersRepo: IGithubUsers
-
     @Inject lateinit var router: Router
-
     @Inject lateinit var screens: IScreens
-
     @Inject lateinit var uiScheduler: Scheduler
+
+    @Inject lateinit var userScopeContainer: IUserScopeContainer
 
     class UsersListPresenter : IUserListPresenter {
 
@@ -70,5 +70,10 @@ class UsersPresenter : MvpPresenter<UsersView>() {
     fun backPressed(): Boolean {
         router.exit()
         return true
+    }
+
+    override fun onDestroy() {
+        userScopeContainer.releaseUserScope()
+        super.onDestroy()
     }
 }

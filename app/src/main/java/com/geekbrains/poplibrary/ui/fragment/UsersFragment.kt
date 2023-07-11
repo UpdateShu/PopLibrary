@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUsersBinding
+import com.geekbrains.poplibrary.di.user.UserSubcomponent
 
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
@@ -24,11 +25,13 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val binding
         get() = _binding!!
 
+    var userSubcomponent: UserSubcomponent? = null
     private var adapter: UsersRVAdapter? = null
 
     val presenter: UsersPresenter by moxyPresenter {
         UsersPresenter().apply {
-            App.instance.appComponent.inject(this)
+            userSubcomponent = App.instance.initUserSubcomponent()
+            userSubcomponent?.inject(this)
         }
     }
 
@@ -52,7 +55,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     override fun init() {
         binding.rUsers.layoutManager = LinearLayoutManager(context)
         adapter = UsersRVAdapter(presenter.usersListPresenter).apply {
-            App.instance.appComponent.inject(this)
+            userSubcomponent?.inject(this)
         }
         binding.rUsers.adapter = adapter
     }

@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 const val INVALID_INDEX = -1
 
-class UsersRVAdapter(val presenter : IUserListPresenter)
+open class UsersRVAdapter(open val presenter : IUserListPresenter)
     : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
     @Inject

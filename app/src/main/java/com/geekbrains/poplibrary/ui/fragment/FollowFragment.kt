@@ -18,6 +18,7 @@ import com.geekbrains.poplibrary.ui.showSnackBarNoAction
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.presenter.FollowPresenter
 import com.geekbrains.poplibrary.mvp.view.FollowView
+import com.geekbrains.poplibrary.ui.adapter.FollowRVAdapter
 
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
@@ -28,11 +29,11 @@ class FollowFragment : MvpAppCompatFragment(), FollowView, BackButtonListener {
     private val binding
         get() = _binding!!
 
-    private var adapter: UsersRVAdapter ?= null
+    private var adapter: UsersRVAdapter?= null
 
     val presenter: FollowPresenter by moxyPresenter {
         FollowPresenter().apply {
-            App.instance.appComponent.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
         }
     }
 
@@ -58,7 +59,8 @@ class FollowFragment : MvpAppCompatFragment(), FollowView, BackButtonListener {
         super.onViewCreated(view, savedInstanceState)
 
         presenter.title = arguments?.getString(FOLLOW_TITLE)
-        presenter.followList = arguments?.getParcelableArrayList(GIT_FOLLOW_ARR,
+        presenter.followList = arguments?.getParcelableArrayList(
+            GIT_FOLLOW_ARR,
             GithubUser::class.java)!!
     }
 
@@ -69,8 +71,8 @@ class FollowFragment : MvpAppCompatFragment(), FollowView, BackButtonListener {
 
     override fun init() {
         binding.rFollowUsers.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.followListPresenter).apply {
-            App.instance.appComponent.inject(this)
+        adapter = FollowRVAdapter(presenter.followListPresenter).apply {
+            App.instance.repositorySubcomponent?.inject(this)
         }
         binding.rFollowUsers.adapter = adapter
     }

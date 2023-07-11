@@ -25,7 +25,7 @@ class UserRepoFragment : MvpAppCompatFragment(), UserRepoView, BackButtonListene
 
     val presenter: UserRepoPresenter by moxyPresenter {
         UserRepoPresenter().apply {
-            App.instance.appComponent.inject(this)
+            App.instance.repositorySubcomponent?.inject(this)
         }
     }
 
@@ -51,7 +51,8 @@ class UserRepoFragment : MvpAppCompatFragment(), UserRepoView, BackButtonListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        presenter.repo = arguments?.getParcelable(GIT_USER_REPO,
+        presenter.repo = arguments?.getParcelable(
+            GIT_USER_REPO,
             GithubRepository::class.java)
     }
 
