@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_follow_title"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="@dimen/title_textSize"
+        android:layout_gravity="center"
+        android:text="@string/txt_follow_title"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/r_followUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/rv_padding"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/rv_padding" />
+
+</LinearLayout>
