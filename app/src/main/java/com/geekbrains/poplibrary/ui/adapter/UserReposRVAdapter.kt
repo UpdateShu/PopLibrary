@@ -17,6 +17,14 @@ class UserReposRVAdapter(val presenter: IUserRepoListPresenter) : RecyclerView.A
         override fun setRepoName(text: String) = with(vb) {
             tvRepositoryName.text = text
         }
+
+        override fun setCreatedAt(text: String) = with(vb) {
+            tvCreatedAt.text = text
+        }
+
+        override fun setUpdatedAt(text: String) = with(vb) {
+            tvUpdatedAt.text = text
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

@@ -16,6 +16,7 @@ data class RoomGithubRepository(
     @PrimaryKey var id: String,
     var name: String,
     var createdAt: String,
+    var updatedAt: String,
     var forksCount: Int,
     val forksUrl: String,
     var userId: String

@@ -23,12 +23,20 @@ open class UsersRVAdapter(open val presenter : IUserListPresenter)
         UserItemView {
         override var pos = INVALID_INDEX
 
-        override fun setLogin(text: String) = with(vb) {
-            tvLogin.text = text
-        }
-
         override fun loadAvatar(url: String) {
             imageLoader.loadInto(url, vb.ivAvatar)
+        }
+
+        override fun setType(text: String) = with(vb) {
+            tvUserType.text = text
+        }
+
+        override fun setLogin(text: String) = with(vb) {
+            tvUserLogin.text = text
+        }
+
+        override fun checkAdmin(siteAdmin: Boolean) = with(vb) {
+            chbAdmin.isChecked = siteAdmin
         }
     }
 

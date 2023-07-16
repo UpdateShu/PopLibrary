@@ -15,6 +15,8 @@ class RoomGithubUsersCache(private val db: Database) : IGithubUsersCache {
             RoomGithubUser(
                 user.id,
                 user.login,
+                user.type ?: "",
+                user.siteAdmin,
                 user.avatarUrl ?: "",
                 user.followersUrl ?: "",
                 user.followingUrl ?: "",
@@ -28,6 +30,8 @@ class RoomGithubUsersCache(private val db: Database) : IGithubUsersCache {
         db.userDao.getAll().map { roomUser -> GithubUser(
             roomUser.id,
             roomUser.login,
+            roomUser.type,
+            roomUser.siteAdmin,
             roomUser.avatarUrl,
             roomUser.followersUrl,
             roomUser.followingUrl,

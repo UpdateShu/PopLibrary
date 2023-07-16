@@ -24,7 +24,7 @@
             android:id="@+id/info_avatar"
             android:layout_width="@dimen/img_size"
             android:layout_height="@dimen/img_size"
-            android:layout_margin="@dimen/img_margin"/>
+            android:layout_margin="@dimen/rv_padding"/>
 
     </FrameLayout>
 

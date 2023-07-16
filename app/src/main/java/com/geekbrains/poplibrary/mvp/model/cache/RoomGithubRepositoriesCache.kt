@@ -21,6 +21,7 @@ class RoomGithubRepositoriesCache(private val db: Database) : IGithubRepositorie
                 repository.id,
                 repository.name ?: "",
                 repository.createdAt ?: "",
+                repository.updatedAt ?: "",
                 repository.forksCount ?: 0,
                 repository.forksUrl,
                 roomUser.id)
@@ -38,6 +39,7 @@ class RoomGithubRepositoriesCache(private val db: Database) : IGithubRepositorie
                     roomRepository.id,
                     roomRepository.name,
                     roomRepository.createdAt,
+                    roomRepository.updatedAt,
                     roomUser.id,
                     roomRepository.forksCount,
                     roomRepository.forksUrl)

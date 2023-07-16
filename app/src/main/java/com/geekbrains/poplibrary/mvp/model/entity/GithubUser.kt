@@ -8,6 +8,8 @@ import android.os.Parcelable
 data class GithubUser(
     @Expose val id: String,
     @Expose val login: String,
+    @Expose val type: String? = null,
+    @Expose val siteAdmin: Boolean = false,
     @Expose val avatarUrl: String? = null,
     @Expose val reposUrl: String? = null,
     @Expose val followersUrl: String? = null,

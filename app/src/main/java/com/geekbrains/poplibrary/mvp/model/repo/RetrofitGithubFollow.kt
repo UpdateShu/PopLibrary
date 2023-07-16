@@ -4,6 +4,7 @@ import com.geekbrains.poplibrary.mvp.model.api.IDataSource
 import com.geekbrains.poplibrary.mvp.model.cache.IGithubUsersCache
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.model.network.INetworkStatus
+
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 

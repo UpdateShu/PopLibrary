@@ -11,4 +11,8 @@
     <string name="followers_description">Подписчики</string>
     <string name="followings_description">Подписки</string>
     <string name="txt_follow_title">Заголовок</string>
+
+    <string name="login_description">login</string>
+    <string name="type_description">type</string>
+    <string name="chb_admin_description">Admin</string>
 </resources>

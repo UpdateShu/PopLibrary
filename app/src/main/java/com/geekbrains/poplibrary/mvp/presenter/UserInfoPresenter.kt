@@ -2,6 +2,7 @@ package com.geekbrains.poplibrary.mvp.presenter
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.geekbrains.poplibrary.BuildConfig.DEBUG
 import com.geekbrains.poplibrary.di.repository.module.IRepositoryScopeContainer
 
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
@@ -21,6 +22,8 @@ import moxy.MvpPresenter
 import javax.inject.Inject
 
 class UserInfoPresenter : MvpPresenter<UserInfoView>() {
+
+    private val DEBUG_LOCAL = DEBUG
 
     @Inject lateinit var userRepositoriesRepo: IGithubRepositories
     @Inject lateinit var userFollowRepo: IGithubFollow
@@ -42,7 +45,15 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
         override fun bindView(view: UserRepoItemView) {
             val repo = repos[view.pos]
-            repo.name?.let { view.setRepoName(it) }
+            repo.name?.let {
+                view.setRepoName(it)
+            }
+            repo.createdAt?.let {
+                view.setCreatedAt(it)
+            }
+            repo.updatedAt?.let {
+                view.setUpdatedAt(it)
+            }
         }
 
         override fun getCount() = repos.size
@@ -87,9 +98,12 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
     private fun subscribeOnUserRepos(user: GithubUser) {
         userRepositoriesRepo.getRepositories(user)
             .observeOn(uiScheduler)
-            .subscribe({repos ->
+            .subscribe({ repos ->
                 userReposListPresenter.repos.clear()
                 userReposListPresenter.repos.addAll(repos)
+                if (DEBUG_LOCAL)
+                    Log.d("GithubUsers", "Repositories loaded: ${repos.count()}")
+
                 viewState.updateUserRepoList()
             }, {
                 Log.e("GithubUsers", "Error: ${it.message}")
@@ -102,6 +116,9 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
             .subscribe({ followers ->
                 followerUsers.clear()
                 followerUsers.addAll(followers)
+                if (DEBUG_LOCAL)
+                    Log.d("GithubUsers", "Followers loaded: ${followerUsers.count()}")
+
                 viewState.setUserFollowers(followerUsers.size)
             }, {
                 Log.e("GithubUsers", "Error: ${it.message}")
@@ -115,6 +132,9 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
             .subscribe({ followings ->
                 followingUsers.clear()
                 followingUsers.addAll(followings)
+                if (DEBUG_LOCAL)
+                    Log.d("GithubUsers", "Following loaded: ${followingUsers.count()}")
+
                 viewState.setUserFollowings(followingUsers.size)
             }, {
                 Log.e("GithubUsers", "Error: ${it.message}")

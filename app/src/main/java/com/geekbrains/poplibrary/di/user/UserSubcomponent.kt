@@ -5,6 +5,7 @@ import com.geekbrains.poplibrary.di.user.module.UserModule
 
 import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
+
 import dagger.Subcomponent
 
 @UserScope

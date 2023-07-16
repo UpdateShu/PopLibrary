@@ -1,6 +1,5 @@
 package com.geekbrains.poplibrary.mvp.presenter
 
-import com.geekbrains.poplibrary.di.user.module.IUserScopeContainer
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.presenter.list.IFollowListPresenter
 import com.geekbrains.poplibrary.mvp.view.FollowView
@@ -26,10 +25,14 @@ class FollowPresenter : MvpPresenter<FollowView>() {
 
         override fun bindView(view: UserItemView) {
             val user = followUsers[view.pos]
-            view.setLogin(user.login)
             user.avatarUrl?.let {
                 view.loadAvatar(it)
             }
+            view.setLogin(user.login)
+            user.type?.let {
+                view.setType(it)
+            }
+            view.checkAdmin(user.siteAdmin)
         }
 
         override fun getCount() = followUsers.size

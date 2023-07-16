@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey
 data class RoomGithubUser(
     @PrimaryKey var id: String,
     var login: String,
+    var type: String,
+    var siteAdmin: Boolean,
     var avatarUrl: String?,
     var followersUrl: String? = null,
     var followingUrl: String? = null,
