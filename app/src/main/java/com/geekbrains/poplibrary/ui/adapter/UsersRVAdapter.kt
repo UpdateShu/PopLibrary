@@ -42,7 +42,9 @@ open class UsersRVAdapter(open val presenter : IUserListPresenter)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)).apply {
-            itemView.setOnClickListener { presenter.itemClickListener?.invoke(this) }
+            itemView.setOnClickListener {
+                presenter.itemClickListener?.invoke(this)
+            }
         }
 
     override fun getItemCount() = presenter.getCount()
