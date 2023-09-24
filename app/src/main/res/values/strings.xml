@@ -2,4 +2,17 @@
     <string name="app_name">PopLibrary</string>
 
     <string name="user_login_description">Логин пользователя</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_repo_description">Наименование репозитория</string>
+    <string name="repo_created">Дата создания</string>
+    <string name="repo_forks_count">Кол-во веток:</string>
+
+    <string name="followers_description">Подписчики</string>
+    <string name="followings_description">Подписки</string>
+    <string name="txt_follow_title">Заголовок</string>
+
+    <string name="login_description">login</string>
+    <string name="type_description">type</string>
+    <string name="chb_admin_description">Admin</string>
 </resources>

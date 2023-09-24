@@ -5,14 +5,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+
 import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.databinding.FragmentUsersBinding
-import com.geekbrains.poplibrary.mvp.model.GithubUsersRepo
-import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
-import com.geekbrains.poplibrary.mvp.view.UsersView
+import com.geekbrains.poplibrary.di.user.UserSubcomponent
+
 import com.geekbrains.poplibrary.ui.activity.BackButtonListener
 import com.geekbrains.poplibrary.ui.adapter.UsersRVAdapter
 import com.geekbrains.poplibrary.ui.showSnackBarNoAction
+
+import com.geekbrains.poplibrary.mvp.presenter.UsersPresenter
+import com.geekbrains.poplibrary.mvp.view.UsersView
+
 import moxy.MvpAppCompatFragment
 import moxy.ktx.moxyPresenter
 
@@ -21,10 +25,14 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
     private val binding
         get() = _binding!!
 
-    var adapter: UsersRVAdapter? = null
+    var userSubcomponent: UserSubcomponent? = null
+    private var adapter: UsersRVAdapter? = null
 
     val presenter: UsersPresenter by moxyPresenter {
-        UsersPresenter(GithubUsersRepo(), App.instance.router)
+        UsersPresenter().apply {
+            userSubcomponent = App.instance.initUserSubcomponent()
+            userSubcomponent?.inject(this)
+        }
     }
 
     companion object {
@@ -35,7 +43,7 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?)
-    = FragmentUsersBinding.inflate(inflater, container, false).also {
+        = FragmentUsersBinding.inflate(inflater, container, false).also {
         _binding = it
     }.root
 
@@ -46,7 +54,9 @@ class UsersFragment : MvpAppCompatFragment(), UsersView, BackButtonListener {
 
     override fun init() {
         binding.rUsers.layoutManager = LinearLayoutManager(context)
-        adapter = UsersRVAdapter(presenter.usersListPresenter)
+        adapter = UsersRVAdapter(presenter.usersListPresenter).apply {
+            userSubcomponent?.inject(this)
+        }
         binding.rUsers.adapter = adapter
     }
 
