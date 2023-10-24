@@ -61,15 +61,15 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         _binding = it
     }.root
 
-    //@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*presenter.user = arguments?.getParcelable(
+        presenter.user = arguments?.getParcelable(
             GIT_USER,
-            GithubUser::class.java)*/
-        presenter.user = arguments?.getParcelable<GithubUser>(
-            GIT_USER)//решение для sdk24
+            GithubUser::class.java)
+        /*presenter.user = arguments?.getParcelable<GithubUser>(
+            GIT_USER)//решение для sdk24*/
     }
 
     override fun init() {
