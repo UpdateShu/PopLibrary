@@ -1,11 +1,13 @@
 package com.geekbrains.poplibrary.ui.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
 import com.geekbrains.poplibrary.databinding.ItemUserBinding
+import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.mvp.presenter.list.IUserListPresenter
 import com.geekbrains.poplibrary.mvp.view.IImageLoader
 import com.geekbrains.poplibrary.mvp.view.list.UserItemView

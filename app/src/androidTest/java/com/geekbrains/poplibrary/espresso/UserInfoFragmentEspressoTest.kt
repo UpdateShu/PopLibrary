@@ -3,12 +3,12 @@ package com.geekbrains.poplibrary.espresso
 import androidx.core.os.bundleOf
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.geekbrains.poplibrary.App
 import com.geekbrains.poplibrary.R
 import com.geekbrains.poplibrary.mvp.model.entity.GithubUser
 import com.geekbrains.poplibrary.ui.fragment.UserInfoFragment
@@ -29,10 +29,16 @@ class UserInfoFragmentEspressoTest {
         scenario = launchFragmentInContainer()
     }
 
+    @After
+    fun close() {
+        scenario.close()
+    }
+
     @Test
     fun fragment_TestBundle(){
         val fragmentArgs = bundleOf(GIT_USER to githubUser)
-        scenario = launchFragmentInContainer<UserInfoFragment>(fragmentArgs = fragmentArgs)
+        scenario = launchFragmentInContainer<UserInfoFragment>(themeResId = R.style.Theme_PopLibrary, fragmentArgs = fragmentArgs)
+        scenario.moveToState(Lifecycle.State.RESUMED)
 
         val assertion = ViewAssertions.matches(ViewMatchers.withText("UpdateShu"))
         Espresso.onView(withId(R.id.user_login)).check(assertion)

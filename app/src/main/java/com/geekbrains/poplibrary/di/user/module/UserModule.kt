@@ -9,6 +9,7 @@ import com.geekbrains.poplibrary.mvp.model.cache.RoomGithubUsersCache
 import com.geekbrains.poplibrary.mvp.model.entity.room.Database
 import com.geekbrains.poplibrary.mvp.model.network.INetworkStatus
 import com.geekbrains.poplibrary.mvp.model.repo.IGithubUsers
+import com.geekbrains.poplibrary.mvp.model.repo.MockGithubUsers
 import com.geekbrains.poplibrary.mvp.model.repo.RetrofitGithubUsers
 
 import dagger.Module
@@ -27,7 +28,7 @@ class UserModule {
         api: IDataSource,
         networkStatus: INetworkStatus,
         cache: IGithubUsersCache)
-        : IGithubUsers = RetrofitGithubUsers(api, networkStatus, cache)
+        : IGithubUsers = MockGithubUsers()
 
     @UserScope
     @Provides
