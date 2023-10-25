@@ -68,6 +68,8 @@ class UserInfoFragment : MvpAppCompatFragment(), UserInfoView, BackButtonListene
         presenter.user = arguments?.getParcelable(
             GIT_USER,
             GithubUser::class.java)
+        /*presenter.user = arguments?.getParcelable<GithubUser>(
+            GIT_USER)//решение для sdk24*/
     }
 
     override fun init() {

@@ -32,7 +32,7 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
     @Inject lateinit var screens: IScreens
     @Inject lateinit var uiScheduler: Scheduler
 
-    @Inject lateinit var repositoryScopeContainer: IRepositoryScopeContainer
+    //@Inject lateinit var repositoryScopeContainer: IRepositoryScopeContainer
 
     var user : GithubUser? = null
     private var followerUsers : MutableList<GithubUser> = mutableListOf()
@@ -149,6 +149,6 @@ class UserInfoPresenter : MvpPresenter<UserInfoView>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        repositoryScopeContainer.releaseRepositoryScope()
+        //repositoryScopeContainer.releaseRepositoryScope()
     }
 }
